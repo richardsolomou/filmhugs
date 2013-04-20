@@ -51,6 +51,26 @@ fnCheckFilmByFan fanRequested (Film title cast year (fan:fans))
 -- specified fan.
 fnDisplayFilmsByFan fanRequested = filter (fnCheckFilmByFan fanRequested)
 
+-- Checks the actors in a single film and returns whether the specified actor
+-- starred in that film.
+fnCheckFilmByActor :: String -> Film -> Bool
+fnCheckFilmByActor actorRequested (Film title (actor:cast) year fans)
+	| actor == actorRequested = True
+	| cast == []			  = False
+	| otherwise				  = fnCheckFilmByActor actorRequested (Film title cast year fans)
+
+-- Gets an actor name and a database of films and checks if the actor starred
+-- in any of those films.
+fnActorExists :: String -> [Film] -> Bool
+fnActorExists _ [] = False
+fnActorExists actorRequested (film:films)
+	| fnCheckFilmByActor actorRequested film = True
+	| otherwise							   = fnActorExists actorRequested films
+
+-- Gets a list of films and filters out the ones that the specified actor did
+-- not star in.
+fnDisplayFilmsByActor actorRequested = filter (fnCheckFilmByActor actorRequested)
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
