@@ -39,6 +39,18 @@ fnGetFilmByTitle name ((Film title cast year fans):films)
 	| name == title = (Film title cast year fans)
 	| otherwise		= fnGetFilmByTitle name films
 
+-- Checks the fans in a single film and returns whether the specified fan liked
+-- that film.
+fnCheckFilmByFan :: String -> Film -> Bool
+fnCheckFilmByFan fanRequested (Film title cast year (fan:fans))
+	| fan == fanRequested = True
+	| fans == []		  = False
+	| otherwise			  = fnCheckFilmByFan fanRequested (Film title cast year fans)
+
+-- Gets a list of films and filters out the ones that were not liked by a
+-- specified fan.
+fnDisplayFilmsByFan fanRequested = filter (fnCheckFilmByFan fanRequested)
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
