@@ -278,6 +278,20 @@ ioAddFilm films name = do
 	putStrLn ""
 	ioDisplayMenu newFilms name
 
+-- Initialiser for the ioDisplayFilms function. Used to avoid overwriting the
+-- original films with the new data.
+initDisplayFilms :: [Film] -> String -> IO ()
+initDisplayFilms films name = do
+	putStrLn ""
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#"
+	putStrLn "--#  Displaying all films"
+	putStrLn "--#"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	ioDisplayFilms films
+	putStrLn ""
+	ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
