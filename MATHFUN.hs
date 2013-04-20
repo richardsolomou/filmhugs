@@ -188,6 +188,36 @@ ioDisplayFilms (film:films) = do
 		then ioDisplayFilms films
 		else return ()
 
+-- Attempts to get a string and keeps asking for it if it gets a null value.
+ioGetString :: IO String
+ioGetString = do
+	str <- getLine
+	if str == ""
+		then ioGetString
+		else return str
+
+-- Loops through to get all the cast members until it reaches an empty string.
+ioGetCast :: Int -> [String] -> IO [String]
+ioGetCast numberOfActors fans = do
+	putStr "--  Actor "
+	putStr (show numberOfActors)
+	putStr ": "
+	fan <- getLine
+	if fan /= ""
+		then ioGetCast (numberOfActors + 1) (fan:fans)
+		else return fans
+
+-- Loops through to get all the film fans until it reaches an empty string.
+ioGetFans :: Int -> [String] -> IO [String]
+ioGetFans numberOfFans fans = do
+	putStr "--  Fan "
+	putStr (show numberOfFans)
+	putStr ": "
+	fan <- getLine
+	if fan /= ""
+		then ioGetFans (numberOfFans + 1) (fan:fans)
+		else return fans
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
