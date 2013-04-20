@@ -244,6 +244,41 @@ ioExit = do
 	putStrLn ""
 
 
+{-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
+{-|--#--#--#--#--#--#   THE  EIGHT  FUCTIONS   #--#--#--#--#--#--|-}
+{-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
+
+-- Adds a film into the database and diplays an appropriate message.
+ioAddFilm :: [Film] -> String -> IO ()
+ioAddFilm films name = do
+	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "--"
+	putStr "--  Film title: "
+	title <- ioGetString
+	putStrLn "--  "
+	putStr "--  Cast (empty to finish): "
+	putStrLn ""
+	cast <- ioGetCast 1 []
+	putStrLn "--  "
+	putStr "--  Release year: "
+	year <- ioGetString
+	putStrLn "--  "
+	putStr "--  Fans (empty to finish): "
+	putStrLn "--  "
+	fans <- ioGetFans 1 []
+	putStrLn "--"
+	putStrLn "--------------------------------------------------------------------------------------------"
+	let newFilms = fnAddNewFilm (Film title cast (read year :: Int) fans) films
+	putStrLn ""
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#"
+	putStrLn "--#  Film successfully added"
+	putStrLn "--#"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn ""
+	ioDisplayMenu newFilms name
+
+
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
