@@ -218,6 +218,31 @@ ioGetFans numberOfFans fans = do
 		then ioGetFans (numberOfFans + 1) (fan:fans)
 		else return fans
 
+-- Saves the changes made to the database of films. Uses a short addition to
+-- the original writeFile code in order to force readFile to read the entire
+-- file and close it before the writeFile action can begin. This is done so
+-- that the user can start the program and close it immediately without having
+-- to have made any changes.
+ioSaveChanges :: [Film] -> String -> IO ()
+ioSaveChanges films name = do
+	length films `seq` writeFile "films.txt" (show films)
+	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "--"
+	putStrLn "--  All changes saved."
+	putStrLn "--"
+	putStrLn "--------------------------------------------------------------------------------------------"
+	ioDisplayMenu films name
+
+ioExit :: IO ()
+ioExit = do
+	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "--"
+	putStrLn "-- Student ID: 630745"
+	putStrLn "-- We <3 Haskell"
+	putStrLn "--"
+	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn ""
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
