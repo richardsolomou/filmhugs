@@ -165,6 +165,34 @@ main = do
 	films <- ioLoadFile
 	ioGetName films
 
+-- Displays the main menu of actions to be chosen from.
+ioDisplayMenu :: [Film] -> String -> IO ()
+ioDisplayMenu films name = do
+	putStrLn ""
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#"
+	putStrLn "--#  Main Menu"
+	putStrLn "--#"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn ""
+	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-- 1 - Add a new film"
+	putStrLn "-- 2 - Display all films"
+	putStrLn "-- 3 - Display all films that were released in a given year"
+	putStrLn "-- 4 - Display all films that a given user is a fan of"
+	putStrLn "-- 5 - Display all films of a given actor that were released during a particular period"
+	putStrLn "-- 6 - Become a fan of a particular film"
+	putStrLn "-- 7 - Display the best film for a given actor"
+	putStrLn "-- 8 - Display the overall top five films sorted in descending order of number of fans"
+	putStrLn "-- 9 - Save changes"
+	putStrLn "-- 0 - Exit"
+	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn ""
+	putStr "Action: "
+	action <- getLine
+	putStrLn ""
+	ioDoAction action films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
