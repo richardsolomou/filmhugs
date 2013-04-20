@@ -82,6 +82,14 @@ fnCheckFilmInPeriod startYear endYear (Film _ _ year _)
 -- star in.
 fnDisplayFilmsByActorInPeriod actorRequested startYear endYear = filter (fnCheckFilmByActor actorRequested) . filter (fnCheckFilmInPeriod startYear endYear)
 
+-- Gets the user's name from IO and the film name that the user wants to be a
+-- fan of and adds the user as a fan of that film.
+fnAddNewFan :: String -> String -> [Film] -> [Film]
+fnAddNewFan _ _ [] = []
+fnAddNewFan fan film ((Film title cast year fans):films)
+	| film == title = (Film title cast year (fan:fans)) : (fnAddNewFan fan film films)
+	| otherwise		= (Film title cast year fans) : (fnAddNewFan fan film films)
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
