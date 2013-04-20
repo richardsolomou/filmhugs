@@ -347,6 +347,39 @@ ioFilmsByActorInPeriod films name = do
 		else ioDisplayFilms fetchedFilms
 	ioDisplayMenu films name
 
+-- Adds a fan to a film and gives an appropriate message if the user is already
+-- a fan of that film.
+ioAddFan :: [Film] -> String -> IO ()
+ioAddFan films name = do
+	putStr "Film name: "
+	film <- ioGetString
+	let filmValues = (fnGetFilmByTitle film films)
+	if filmValues /= (Film "" [] 0 [])
+		then do
+			if (fnCheckFilmByFan name filmValues) == True
+				then do
+					putStrLn "--------------------------------------------------------------------------------------------"
+					putStrLn "--"
+					putStrLn "--  You are already a fan of this film."
+					putStrLn "--"
+					putStrLn "--------------------------------------------------------------------------------------------"
+					ioDisplayMenu films name
+				else do
+					let newFilms = fnAddNewFan name film films
+					putStrLn "--------------------------------------------------------------------------------------------"
+					putStrLn "--"
+					putStrLn "--  You are now a fan of this film."
+					putStrLn "--"
+					putStrLn "--------------------------------------------------------------------------------------------"
+					ioDisplayMenu newFilms name
+		else do
+			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "--"
+			putStrLn "--  Film doesn't exist."
+			putStrLn "--"
+			putStrLn "--------------------------------------------------------------------------------------------"
+			ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
