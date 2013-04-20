@@ -325,6 +325,28 @@ ioFilmsByFan films name = do
 		else ioDisplayFilms fetchedFilms
 	ioDisplayMenu films name
 
+-- Gets a list of films, an actor name, a start data and an end date, and shows
+-- the films that the specified actor starred in and that were released during
+-- that period.
+ioFilmsByActorInPeriod :: [Film] -> String -> IO ()
+ioFilmsByActorInPeriod films name = do
+	putStr "Actor name: "
+	actor <- ioGetString
+	putStr "Start year: "
+	start <- ioGetString
+	putStr "End year: "
+	end <- ioGetString
+	let fetchedFilms = fnDisplayFilmsByActorInPeriod actor (read start :: Int) (read end :: Int) films
+	if fetchedFilms == []
+		then do
+			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "--"
+			putStrLn "-- No films were released during this period that this actor has starred in."
+			putStrLn "--"
+			putStrLn "--------------------------------------------------------------------------------------------"
+		else ioDisplayFilms fetchedFilms
+	ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
