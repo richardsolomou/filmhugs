@@ -154,6 +154,18 @@ ioGetName films = do
 		else ioDisplayMenu films name
 
 
+{-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
+{-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
+{-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
+
+-- Acts as the entry point for the program and calls the loadFile function to
+-- get the list of films in order to pass it to the getName function
+main :: IO ()
+main = do
+	films <- ioLoadFile
+	ioGetName films
+
+
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
