@@ -123,6 +123,9 @@ fnTopFilms :: Int -> [Film] -> [Film]
 fnTopFilms 0 _ = []
 fnTopFilms numberOfFilms (film:films) = (fnFilmWithMostFans films film) : (fnTopFilms (numberOfFilms - 1) (fnRemoveRepeatingFilms (film:films) (film:films)))
 
+-- Reverses a list of films.
+fnReverseList films = reverse films
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
