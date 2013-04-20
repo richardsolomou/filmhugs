@@ -128,6 +128,18 @@ fnReverseList films = reverse films
 
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
+{-|--#--#--#--#--#--#   IO  CODE   #--#--#--#--#--#--|-}
+{-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
+
+-- Opens the films.txt file to load the films database.
+ioLoadFile :: IO [Film]
+ioLoadFile = do
+	allFilms <- readFile "films.txt"
+	let films = read allFilms :: [Film]
+	return films
+
+
+{-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 
