@@ -153,6 +153,17 @@ ioGetName films = do
 		then ioGetName films
 		else ioDisplayMenu films name
 
+-- Gets a list of strings and displays it separated by commas up until the
+-- penultimate value.
+ioDisplayList :: [String] -> IO ()
+ioDisplayList [] = do return ()
+ioDisplayList (item:list) = do
+	putStr item
+	if list /= []
+		then putStr ", "
+		else return ()
+	ioDisplayList list
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
