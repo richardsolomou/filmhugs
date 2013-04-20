@@ -380,6 +380,23 @@ ioAddFan films name = do
 			putStrLn "--------------------------------------------------------------------------------------------"
 			ioDisplayMenu films name
 
+-- Gets a list of films and an actor name and returns the best film that the
+-- actor has starred in.
+ioDisplayBestFilm :: [Film] -> String -> IO ()
+ioDisplayBestFilm films name = do
+	putStr "Actor name: "
+	actor <- ioGetString
+	let fetchedFilm = fnBestFilmByActor actor films
+	if fetchedFilm == (Film "" [] 0 [])
+		then do
+			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "--"
+			putStrLn "--  Actor doesn't exist."
+			putStrLn "--"
+			putStrLn "--------------------------------------------------------------------------------------------"
+		else ioIndividualFilm fetchedFilm
+	ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
