@@ -193,6 +193,20 @@ ioDisplayMenu films name = do
 	putStrLn ""
 	ioDoAction action films name
 
+-- Calls the respective function for each action as chosen by the user.
+ioDoAction :: String -> [Film] -> String -> IO ()
+ioDoAction "1" films name = ioAddFilm films name
+ioDoAction "2" films name = initDisplayFilms films name
+ioDoAction "3" films name = ioFilmsByYear films name
+ioDoAction "4" films name = ioFilmsByFan films name
+ioDoAction "5" films name = ioFilmsByActorInPeriod films name
+ioDoAction "6" films name = ioAddFan films name
+ioDoAction "7" films name = ioDisplayBestFilm films name
+ioDoAction "8" films name = ioDisplayTopFive films name
+ioDoAction "9" films name = ioSaveChanges films name
+ioDoAction "0" films name = ioExit
+ioDoAction _ films name = ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
