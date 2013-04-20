@@ -138,6 +138,21 @@ ioLoadFile = do
 	let films = read allFilms :: [Film]
 	return films
 
+-- Gets the database that was passed from ioloadFile and the user's name and
+-- passes them up to the displayFilms function.
+ioGetName :: [Film] -> IO ()
+ioGetName films = do
+	putStrLn ""
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#"
+	putStr "--#  User name: "
+	name <- getLine
+	putStrLn "--#"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	if name == ""
+		then ioGetName films
+		else ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
