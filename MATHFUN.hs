@@ -101,6 +101,14 @@ fnFilmWithMostFans (film:films) maxFans
 	| (fnNumberOfFans film) > (fnNumberOfFans maxFans) = fnFilmWithMostFans films film
 	| otherwise									   = fnFilmWithMostFans films maxFans
 
+-- Gets an actor name and a database of films and checks if the actor requested
+-- has starred in a film. Checks the films they starred in for the one with the
+-- most fans, otherwise it gets the one film with the most fans.
+fnBestFilmByActor :: String -> [Film] -> Film
+fnBestFilmByActor actorRequested (film:films)
+	| fnActorExists actorRequested films = fnFilmWithMostFans (fnDisplayFilmsByActor actorRequested films) film
+	| otherwise						   = Film "" [] 0 []
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
