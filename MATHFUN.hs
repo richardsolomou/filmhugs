@@ -90,6 +90,17 @@ fnAddNewFan fan film ((Film title cast year fans):films)
 	| film == title = (Film title cast year (fan:fans)) : (fnAddNewFan fan film films)
 	| otherwise		= (Film title cast year fans) : (fnAddNewFan fan film films)
 
+-- Gets a film and returns the number of its fans.
+fnNumberOfFans (Film _ _ _ fans) = length fans
+
+-- Gets a database of films and the first film in the database and checks with
+-- that to find the film with the most fans, and returns it.
+fnFilmWithMostFans :: [Film] -> Film -> Film
+fnFilmWithMostFans [] maxFans = maxFans
+fnFilmWithMostFans (film:films) maxFans
+	| (fnNumberOfFans film) > (fnNumberOfFans maxFans) = fnFilmWithMostFans films film
+	| otherwise									   = fnFilmWithMostFans films maxFans
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
