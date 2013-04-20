@@ -109,6 +109,20 @@ fnBestFilmByActor actorRequested (film:films)
 	| fnActorExists actorRequested films = fnFilmWithMostFans (fnDisplayFilmsByActor actorRequested films) film
 	| otherwise						   = Film "" [] 0 []
 
+-- Gets the database of films twice and creates a list of the returned films
+-- in order to avoid duplicating films from the top films function.
+fnRemoveRepeatingFilms :: [Film] -> [Film] -> [Film]
+fnRemoveRepeatingFilms _ [] = []
+fnRemoveRepeatingFilms (originalFilm:originalFilms) (returnedFilm:returnedFilms)
+	| returnedFilm == fnFilmWithMostFans originalFilms originalFilm = fnRemoveRepeatingFilms (originalFilm:originalFilms) returnedFilms
+	| otherwise													  = returnedFilm : fnRemoveRepeatingFilms (originalFilm:originalFilms) returnedFilms
+
+-- Gets a number of top films to display and a database and creates a new list
+-- in order to display those films in ascending order (to be reversed in IO).
+fnTopFilms :: Int -> [Film] -> [Film]
+fnTopFilms 0 _ = []
+fnTopFilms numberOfFilms (film:films) = (fnFilmWithMostFans films film) : (fnTopFilms (numberOfFilms - 1) (fnRemoveRepeatingFilms (film:films) (film:films)))
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
