@@ -397,6 +397,15 @@ ioDisplayBestFilm films name = do
 		else ioIndividualFilm fetchedFilm
 	ioDisplayMenu films name
 
+-- Displays the overall top five films based on the number of fans, in
+-- descending order.
+ioDisplayTopFive :: [Film] -> String -> IO ()
+ioDisplayTopFive films name = do
+	putStrLn "The overall top five films are listed below in descending order of number of fans."
+	let topFilms = fnReverseList (fnTopFilms 5 films)
+	ioDisplayFilms topFilms
+	ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
