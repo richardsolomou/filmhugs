@@ -71,6 +71,17 @@ fnActorExists actorRequested (film:films)
 -- not star in.
 fnDisplayFilmsByActor actorRequested = filter (fnCheckFilmByActor actorRequested)
 
+-- Checks if the film was released within the period of the start and end year.
+fnCheckFilmInPeriod :: Int -> Int -> Film -> Bool
+fnCheckFilmInPeriod startYear endYear (Film _ _ year _)
+	| year >= startYear && year <= endYear = True
+	| otherwise							   = False
+
+-- Gets a list of films and filters out the ones that were not released during
+-- the specified time period and the ones where the specified actor did not
+-- star in.
+fnDisplayFilmsByActorInPeriod actorRequested startYear endYear = filter (fnCheckFilmByActor actorRequested) . filter (fnCheckFilmInPeriod startYear endYear)
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
