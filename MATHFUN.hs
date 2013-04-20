@@ -20,6 +20,17 @@ data Film =  Film String [String] Int [String]
 fnAddNewFilm :: Film -> [Film] -> [Film]
 fnAddNewFilm filmToAdd listOfFilms = listOfFilms ++ [filmToAdd]
 
+-- Checks the year for a single film and returns whether it was released during
+-- that year.
+fnCheckFilmByYear :: Int -> Film -> Bool
+fnCheckFilmByYear yearRequested (Film _ _ year _)
+	| year == yearRequested = True
+	| otherwise				= False
+
+-- Gets a list of films and filters out the ones that were not released during
+-- that year.
+fnDisplayFilmsByYear yearRequested = filter (fnCheckFilmByYear yearRequested)
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
