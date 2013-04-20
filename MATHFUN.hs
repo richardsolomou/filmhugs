@@ -164,6 +164,30 @@ ioDisplayList (item:list) = do
 		else return ()
 	ioDisplayList list
 
+-- Displays one film on the screen.
+ioIndividualFilm :: Film -> IO ()
+ioIndividualFilm (Film title cast year fans) = do
+	putStrLn ""
+	putStrLn "--------------------------------------------------------------------------------------------"
+	putStr "--  Title: "
+	putStrLn title
+	putStr "--  Cast: "
+	ioDisplayList cast
+	putStrLn ""
+	putStr "--  Year: "
+	putStrLn (show year)
+	putStr "--  Fans: "
+	putStrLn (show (fnNumberOfFans (Film title cast year fans)))
+	putStrLn "--------------------------------------------------------------------------------------------"
+
+-- Displays films from the list of films given.
+ioDisplayFilms :: [Film] ->IO ()
+ioDisplayFilms (film:films) = do
+	ioIndividualFilm film
+	if films /= []
+		then ioDisplayFilms films
+		else return ()
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
