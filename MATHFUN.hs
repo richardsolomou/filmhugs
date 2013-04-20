@@ -292,6 +292,39 @@ initDisplayFilms films name = do
 	putStrLn ""
 	ioDisplayMenu films name
 
+-- Gets a list of films and a year and displays the ones that were released
+-- during that year.
+ioFilmsByYear :: [Film] -> String -> IO ()
+ioFilmsByYear films name = do
+	putStr "Release year: "
+	year <- ioGetString
+	let fetchedFilms = fnDisplayFilmsByYear (read year :: Int) films
+	if fetchedFilms == []
+		then do
+			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "--"
+			putStrLn "--  No films were released during this year."
+			putStrLn "--"
+			putStrLn "--------------------------------------------------------------------------------------------"
+		else ioDisplayFilms fetchedFilms
+	ioDisplayMenu films name
+
+-- Gets a list of films and a fan name and displays the ones that the fan likes.
+ioFilmsByFan :: [Film] -> String -> IO ()
+ioFilmsByFan films name = do
+	putStr "Fan name: "
+	fan <- ioGetString
+	let fetchedFilms = fnDisplayFilmsByFan fan films
+	if fetchedFilms == []
+		then do
+			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "--"
+			putStrLn "--  This fan isn't a fan of any films."
+			putStrLn "--"
+			putStrLn "--------------------------------------------------------------------------------------------"
+		else ioDisplayFilms fetchedFilms
+	ioDisplayMenu films name
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#  MENU  #--#--#--#--#--#--|-}
