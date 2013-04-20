@@ -31,6 +31,14 @@ fnCheckFilmByYear yearRequested (Film _ _ year _)
 -- that year.
 fnDisplayFilmsByYear yearRequested = filter (fnCheckFilmByYear yearRequested)
 
+-- Goes through all the films and gets the one that matches the title given
+-- and returns the rest of the film's values.
+fnGetFilmByTitle :: String -> [Film] -> Film
+fnGetFilmByTitle _ [] = (Film "" [] 0 [])
+fnGetFilmByTitle name ((Film title cast year fans):films)
+	| name == title = (Film title cast year fans)
+	| otherwise		= fnGetFilmByTitle name films
+
 
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
