@@ -143,12 +143,12 @@ ioLoadFile = do
 ioGetName :: [Film] -> IO ()
 ioGetName films = do
 	putStrLn ""
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	putStrLn "--#"
 	putStr "--#  User name: "
 	name <- getLine
 	putStrLn "--#"
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	if name == ""
 		then ioGetName films
 		else ioDisplayMenu films name
@@ -168,7 +168,7 @@ ioDisplayList (item:list) = do
 ioIndividualFilm :: Film -> IO ()
 ioIndividualFilm (Film title cast year fans) = do
 	putStrLn ""
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	putStr "--  Title: "
 	putStrLn title
 	putStr "--  Cast: "
@@ -178,7 +178,7 @@ ioIndividualFilm (Film title cast year fans) = do
 	putStrLn (show year)
 	putStr "--  Fans: "
 	putStrLn (show (fnNumberOfFans (Film title cast year fans)))
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 
 -- Displays films from the list of films given.
 ioDisplayFilms :: [Film] ->IO ()
@@ -226,21 +226,21 @@ ioGetFans numberOfFans fans = do
 ioSaveChanges :: [Film] -> String -> IO ()
 ioSaveChanges films name = do
 	length films `seq` writeFile "films.txt" (show films)
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	putStrLn "--"
 	putStrLn "--  All changes saved."
 	putStrLn "--"
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	ioDisplayMenu films name
 
 ioExit :: IO ()
 ioExit = do
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	putStrLn "--"
 	putStrLn "-- Student ID: 630745"
 	putStrLn "-- We <3 Haskell"
 	putStrLn "--"
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	putStrLn ""
 
 
@@ -251,7 +251,7 @@ ioExit = do
 -- Adds a film into the database and diplays an appropriate message.
 ioAddFilm :: [Film] -> String -> IO ()
 ioAddFilm films name = do
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	putStrLn "--"
 	putStr "--  Film title: "
 	title <- ioGetString
@@ -264,17 +264,17 @@ ioAddFilm films name = do
 	year <- ioGetString
 	putStrLn "--  "
 	putStr "--  Fans (empty to finish): "
-	putStrLn "--  "
+	putStrLn ""
 	fans <- ioGetFans 1 []
 	putStrLn "--"
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	let newFilms = fnAddNewFilm (Film title cast (read year :: Int) fans) films
 	putStrLn ""
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	putStrLn "--#"
 	putStrLn "--#  Film successfully added"
 	putStrLn "--#"
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	putStrLn ""
 	ioDisplayMenu newFilms name
 
@@ -283,11 +283,11 @@ ioAddFilm films name = do
 initDisplayFilms :: [Film] -> String -> IO ()
 initDisplayFilms films name = do
 	putStrLn ""
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	putStrLn "--#"
 	putStrLn "--#  Displaying all films"
 	putStrLn "--#"
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	ioDisplayFilms films
 	putStrLn ""
 	ioDisplayMenu films name
@@ -301,11 +301,11 @@ ioFilmsByYear films name = do
 	let fetchedFilms = fnDisplayFilmsByYear (read year :: Int) films
 	if fetchedFilms == []
 		then do
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 			putStrLn "--"
 			putStrLn "--  No films were released during this year."
 			putStrLn "--"
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 		else ioDisplayFilms fetchedFilms
 	ioDisplayMenu films name
 
@@ -317,11 +317,11 @@ ioFilmsByFan films name = do
 	let fetchedFilms = fnDisplayFilmsByFan fan films
 	if fetchedFilms == []
 		then do
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 			putStrLn "--"
 			putStrLn "--  This fan isn't a fan of any films."
 			putStrLn "--"
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 		else ioDisplayFilms fetchedFilms
 	ioDisplayMenu films name
 
@@ -339,11 +339,11 @@ ioFilmsByActorInPeriod films name = do
 	let fetchedFilms = fnDisplayFilmsByActorInPeriod actor (read start :: Int) (read end :: Int) films
 	if fetchedFilms == []
 		then do
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 			putStrLn "--"
 			putStrLn "-- No films were released during this period that this actor has starred in."
 			putStrLn "--"
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 		else ioDisplayFilms fetchedFilms
 	ioDisplayMenu films name
 
@@ -358,26 +358,26 @@ ioAddFan films name = do
 		then do
 			if (fnCheckFilmByFan name filmValues) == True
 				then do
-					putStrLn "--------------------------------------------------------------------------------------------"
+					putStrLn "-----------------------------------------------------------------------------"
 					putStrLn "--"
 					putStrLn "--  You are already a fan of this film."
 					putStrLn "--"
-					putStrLn "--------------------------------------------------------------------------------------------"
+					putStrLn "-----------------------------------------------------------------------------"
 					ioDisplayMenu films name
 				else do
 					let newFilms = fnAddNewFan name film films
-					putStrLn "--------------------------------------------------------------------------------------------"
+					putStrLn "-----------------------------------------------------------------------------"
 					putStrLn "--"
 					putStrLn "--  You are now a fan of this film."
 					putStrLn "--"
-					putStrLn "--------------------------------------------------------------------------------------------"
+					putStrLn "-----------------------------------------------------------------------------"
 					ioDisplayMenu newFilms name
 		else do
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 			putStrLn "--"
 			putStrLn "--  Film doesn't exist."
 			putStrLn "--"
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 			ioDisplayMenu films name
 
 -- Gets a list of films and an actor name and returns the best film that the
@@ -389,11 +389,11 @@ ioDisplayBestFilm films name = do
 	let fetchedFilm = fnBestFilmByActor actor films
 	if fetchedFilm == (Film "" [] 0 [])
 		then do
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 			putStrLn "--"
 			putStrLn "--  Actor doesn't exist."
 			putStrLn "--"
-			putStrLn "--------------------------------------------------------------------------------------------"
+			putStrLn "-----------------------------------------------------------------------------"
 		else ioIndividualFilm fetchedFilm
 	ioDisplayMenu films name
 
@@ -422,24 +422,24 @@ main = do
 ioDisplayMenu :: [Film] -> String -> IO ()
 ioDisplayMenu films name = do
 	putStrLn ""
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	putStrLn "--#"
 	putStrLn "--#  Main Menu"
 	putStrLn "--#"
-	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
+	putStrLn "--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--"
 	putStrLn ""
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	putStrLn "-- 1 - Add a new film"
 	putStrLn "-- 2 - Display all films"
 	putStrLn "-- 3 - Display all films that were released in a given year"
 	putStrLn "-- 4 - Display all films that a given user is a fan of"
-	putStrLn "-- 5 - Display all films of a given actor that were released during a particular period"
+	putStrLn "-- 5 - Display all films of a given actor that were released during a period"
 	putStrLn "-- 6 - Become a fan of a particular film"
 	putStrLn "-- 7 - Display the best film for a given actor"
-	putStrLn "-- 8 - Display the overall top five films sorted in descending order of number of fans"
+	putStrLn "-- 8 - Display the overall top five films sorted in descending order of fans"
 	putStrLn "-- 9 - Save changes"
 	putStrLn "-- 0 - Exit"
-	putStrLn "--------------------------------------------------------------------------------------------"
+	putStrLn "-----------------------------------------------------------------------------"
 	putStrLn ""
 	putStr "Action: "
 	action <- getLine
