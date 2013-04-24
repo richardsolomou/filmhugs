@@ -233,6 +233,7 @@ ioSaveChanges films name = do
 	putStrLn "-----------------------------------------------------------------------------"
 	ioDisplayMenu films name
 
+-- Exits the program.
 ioExit :: IO ()
 ioExit = do
 	putStrLn "-----------------------------------------------------------------------------"
