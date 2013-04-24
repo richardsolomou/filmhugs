@@ -465,6 +465,19 @@ ioDoAction _ films name = ioDisplayMenu films name
 {-|--#--#--#--#--#--#   DATABASE   #--#--#--#--#--#--|-}
 {-|--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--|-}
 
+-- Demo function to test basic functionality (without persistence - i.e.
+-- testDatabase doesn't change and nothing is saved/loaded to/from file).
+demo :: Int -> IO ()
+demo 1 = ioDisplayFilms (fnAddNewFilm (Film "The Great Gatsby" ["Leonardo Dicaprio", "Tobey Maguire"] 2013 []) testDatabase)
+demo 2 = ioDisplayFilms (testDatabase)
+demo 3 = ioDisplayFilms (fnDisplayFilmsByYear 2012 testDatabase)
+demo 4 = ioDisplayFilms (fnDisplayFilmsByActor "Zoe" testDatabase)
+demo 5 = ioDisplayFilms (fnDisplayFilmsByActorInPeriod "Tom Hanks" 2000 2011 testDatabase)
+demo 6 = ioDisplayFilms (fnAddNewFan "Zoe" "Forrest Gump" testDatabase)
+demo 61 = ioDisplayFilms (fnAddNewFan "Zoe" "Inception" testDatabase)
+demo 7 = ioIndividualFilm (fnBestFilmByActor "Tom Hanks" testDatabase)
+demo 8 = ioDisplayFilms (fnReverseList (fnTopFilms 5 testDatabase))
+
 -- Database of films to be used for demonstration of functional code.
 testDatabase :: [Film]
 testDatabase = [(Film "Casino Royale" ["Daniel Craig", "Eva Green", "Judi Dench"] 2006 ["Garry", "Dave", "Zoe", "Kevin", "Emma"]),
